@@ -7,6 +7,19 @@
 **Firebase Studio** は、Googleが提供する次世代のクラウド開発環境です。ブラウザだけで、ローカル開発環境と遜色ないフルスタックの開発・テスト・プレビューが可能になります。
 本リポジトリは、この Firebase Studio 上で Docker 構成を即座に立ち上げられるよう最適化されています。
 
+### 💳 料金と利用制限について
+
+Firebase Studio は無料で利用可能ですが、[Google Developer Program](https://www.google.com/search?q=https://developers.google.com/community/dev-program) の参加状況によって作成できる「ワークスペース」の数が決まります。
+
+* **基本利用:** 無料（Googleアカウントがあれば誰でも利用可能）
+* **ワークスペースの上限:**
+* **プログラム未参加:** 最大 **3つ** まで
+* **Google Developer Program (無料版) 参加:** 最大 **10つ** まで
+* **Google Developer Program (プレミアム) 参加:** 最大 **30つ** まで
+
+
+* **注意点:** Firebase App Hosting などの一部機能を利用する場合は、Firebaseプロジェクトを Blaze プラン（従量課金）へアップグレードする必要がある場合があります。
+
 ## 🚀 1分で開始：Firebase Studio へのインポート
 
 最も簡単な開始方法は、Firebase Studioに直接インポートすることです。
@@ -34,7 +47,7 @@ docker compose run --rm frontend npm install
 
 ## 🛠️ ローカル環境でのセットアップ
 
-開発環境をローカル（PC）に構築する場合は、以下の手順に従ってください。
+PCローカルに構築する場合は、以下の手順に従ってください。
 
 ### 前提条件
 
