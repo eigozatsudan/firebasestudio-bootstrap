@@ -7,6 +7,15 @@
   packages = [
     pkgs.nodejs_20
   ];
+  services = {
+    postgres = {
+      enable = true;
+      package = pkgs.postgresql_16;
+    };
+    docker = {
+      enable = true;
+    };
+  };
   # Sets environment variables in the workspace
   env = {};
   idx = {
@@ -18,9 +27,10 @@
     workspace = {
       # Runs when a workspace is first created with this `dev.nix` file
       onCreate = {
-        npm-install = "npm i --no-audit --no-progress --timing";
-        # Open editors for the following files by default, if they exist:
-        default.openFiles = [ "src/App.tsx" "src/App.ts" "src/App.jsx" "src/App.js" ];
+        # npm-install = "npm i --no-audit --no-progress --timing";
+        # # Open editors for the following files by default, if they exist:
+        # default.openFiles = [ "src/App.tsx" "src/App.ts" "src/App.jsx" "src/App.js" ];
+        # docker-compose-up = "docker compose up --build -d";
       };
       # To run something each time the workspace is (re)started, use the `onStart` hook
     };
@@ -29,9 +39,18 @@
       enable = true;
       previews = {
         web = {
-          command = ["npm" "run" "dev" "--" "--port" "$PORT" "--host" "0.0.0.0"];
+          # The command to run to start the server
+          command = ["docker" "compose" "up"];
+          # The manager to use for the preview
           manager = "web";
+          env = {
+            PORT = "$PORT"; 
+          };
         };
+        # backend = {
+        #     command = ["sleep" "infinity"];
+        #     manager = "web";
+        # };
       };
     };
   };

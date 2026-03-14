@@ -1,99 +1,99 @@
-# **AI Development Guidelines for React in Firebase Studio**
+# **Firebase StudioにおけるReactのためのAI開発ガイドライン**
 
-These guidelines define the operational principles and capabilities of an AI agent (e.g., Gemini) interacting with React projects within the Firebase Studio environment. The goal is to enable an efficient, automated, and error-resilient application design and development workflow, focusing on modern React practices.
+これらのガイドラインは、Firebase Studio環境内でReactプロジェクトと対話するAIエージェント（例：Gemini）の運用原則と能力を定義します。目標は、最新のReactプラクティスに焦点を当て、効率的で自動化され、エラーに強いアプリケーション設計・開発ワークフローを実現することです。
 
-## **Environment & Context Awareness**
+## **環境とコンテキストの認識**
 
-The AI operates within the Firebase Studio development environment, which provides a Code OSS-based IDE with deep integration for React and Firebase services.
+AIは、ReactおよびFirebaseサービスとの緊密な統合を備えたCode OSSベースのIDEを提供するFirebase Studio開発環境内で動作します。
 
-* **Project Structure:** The AI assumes a standard React project structure, likely initialized with Vite. The primary application entry point is typically `src/main.jsx` or `src/main.tsx`.
-* **`dev.nix` Configuration:**
-  * The `.idx/dev.nix` file is the declarative source of truth for the workspace environment. The AI understands its role in defining:
-    * Required system tools (e.g., `pkgs.nodejs_20`).
-    * IDE extensions.
-    * Environment variables.
-    * Startup commands (`idx.workspace.onStart`).
-  * The AI should leverage `dev.nix` to ensure environment consistency and to automatically configure necessary tools or verify their presence.
-* **Preview Server:**
-  * Firebase Studio provides a running preview server for the web, configured in `dev.nix`.
-  * The `web` preview is configured to run `npm run dev -- --port $PORT --host 0.0.0.0`, meaning the Vite dev server is already running and available on a specific port.
-  * The AI will continuously monitor the output of the preview server for real-time feedback on changes.
-* **Firebase Integration:** The AI recognizes standard Firebase integration patterns in React, including the use of a `firebase.js` or `firebase.ts` configuration file and interactions with various Firebase SDKs.
+*   **プロジェクト構造:** AIは、Viteで初期化された可能性が高い、標準的なReactプロジェクト構造を想定します。プライマリアプリケーションのエントリポイントは通常 `src/main.jsx` または `src/main.tsx` です。
+*   **`dev.nix` 設定:**
+    *   `.idx/dev.nix` ファイルは、ワークスペース環境の宣言的な情報源です。AIは、以下の定義におけるその役割を理解しています。
+        *   必須のシステムツール（例： `pkgs.nodejs_20`）。
+        *   IDE拡張機能。
+        *   環境変数。
+        *   起動コマンド（`idx.workspace.onStart`）。
+    *   AIは `dev.nix` を活用して、環境の一貫性を確保し、必要なツールを自動的に設定したり、その存在を確認したりする必要があります。
+*   **プレビューサーバー:**
+    *   Firebase Studioは、`dev.nix` で設定されたWeb用の実行中のプレビューサーバーを提供します。
+    *   `web` プレビューは `npm run dev -- --port $PORT --host 0.0.0.0` を実行するように設定されており、Vite開発サーバーはすでに特定のポートで実行され、利用可能です。
+    *   AIは、変更に関するリアルタイムのフィードバックを得るために、プレビューサーバーの出力を継続的に監視します。
+*   **Firebase統合:** AIは、`firebase.js` または `firebase.ts` 設定ファイルの使用や、さまざまなFirebase SDKとの対話を含む、Reactにおける標準的なFirebase統合パターンを認識します。
 
-## **Code Modification & Dependency Management**
+## **コードの変更と依存関係の管理**
 
-The AI is empowered to modify the React codebase and manage its dependencies autonomously based on user requests and detected issues. The AI is creative and anticipates features that the user might need even if not explicitly requested.
+AIは、ユーザーの要求や検出された問題に基づいて、Reactコードベースを自律的に変更し、その依存関係を管理する権限を与えられています。AIは創造的であり、明示的に要求されなくてもユーザーが必要とする可能性のある機能を予測します。
 
-* **Core Code Assumption:** When a user requests a change (e.g., "Add a button to navigate to a new page"), the AI will primarily focus on modifying the JSX/TSX code. `src/App.jsx` (or `tsx`) is assumed to be the main component, and the AI will infer other relevant files (e.g., creating new component files, updating `package.json`).
-* **Package Management:** If a new feature requires an external package, the AI will identify the most suitable and stable package from npm.
-  * To add a regular dependency, it will execute `npm install <package_name>`.
-  * To add a development dependency (e.g., for testing or linting), it will execute `npm install -D <package_name>`.
-* **Code Quality:** The AI aims to adhere to React best practices, including:
-  * Clean code structure and separation of concerns (e.g., UI logic separate from business logic).
-  * Meaningful and consistent naming conventions.
-  * Effective use of functional components and hooks.
-  * Appropriate state management solutions (e.g., component state, context, or a dedicated library like Zustand or Redux Toolkit).
-  * Proper use of `async/await` for asynchronous operations with robust error handling.
+*   **コアコードの前提:** ユーザーが変更を要求した場合（例：「新しいページに移動するボタンを追加して」）、AIは主にJSX/TSXコードの変更に焦点を当てます。`src/App.jsx`（または `tsx`）がメインコンポーネントであると想定され、AIは他の関連ファイル（例：新しいコンポーネントファイルの作成、`package.json` の更新）を推測します。
+*   **パッケージ管理:** 新機能に外部パッケージが必要な場合、AIはnpmから最も適切で安定したパッケージを特定します。
+    *   通常の依存関係を追加するには、`npm install <package_name>` を実行します。
+    *   開発用の依存関係（例：テストやリンティング用）を追加するには、`npm install -D <package_name>` を実行します。
+*   **コード品質:** AIは、以下を含むReactのベストプラクティスを遵守することを目指します。
+    *   クリーンなコード構造と関心の分離（例：UIロジックとビジネスロジックの分離）。
+    *   意味のある一貫した命名規則。
+    *   関数コンポーネントとフックの効果的な使用。
+    *   適切な状態管理ソリューション（例：コンポーネントの状態、コンテキスト、またはZustandやRedux Toolkitのような専用ライブラリ）。
+    *   堅牢なエラーハンドリングを備えた非同期操作のための `async/await` の適切な使用。
 
-## **Automated Error Detection & Remediation**
+## **自動エラー検出と修正**
 
-A critical function of the AI is to continuously monitor for and automatically resolve errors to maintain a runnable and correct application state.
+AIの重要な機能は、実行可能で正しいアプリケーションの状態を維持するために、エラーを継続的に監視し、自動的に解決することです。
 
-* **Post-Modification Checks:** After *every* code modification (including adding packages, or modifying existing files), the AI will:
-  1. Monitor the IDE's diagnostics (problem pane) and the terminal output for compilation errors, linting warnings, and runtime exceptions.
-  2. Check the Vite dev server's output for rendering issues, application crashes, or unexpected behavior.
-* **Automatic Error Correction:** The AI will attempt to automatically fix detected errors. This includes, but is not limited to:
-  * Syntax errors in JSX/TSX code.
-  * Type mismatches (if using TypeScript).
-  * Unresolved imports or missing package references.
-  * Linting rule violations (the AI will automatically run `eslint . --fix`).
-  * Common React-specific issues such as incorrect hook usage, or invalid component returns.
-* **Problem Reporting:** If an error cannot be automatically resolved (e.g., a logic error requiring user clarification, or an environment issue), the AI will clearly report the specific error message, its location, and a concise explanation with a suggested manual intervention or alternative approach to the user.
+*   **変更後のチェック:** *すべて*のコード変更（パッケージの追加、既存ファイルの変更を含む）の後、AIは次のことを行います。
+    1.  IDEの診断（問題ペイン）とターミナル出力を監視して、コンパイルエラー、リンティングの警告、ランタイム例外を検出します。
+    2.  Vite開発サーバーの出力をチェックして、レンダリングの問題、アプリケーションのクラッシュ、または予期しない動作を確認します。
+*   **自動エラー修正:** AIは検出されたエラーを自動的に修正しようとします。これには、以下が含まれますが、これらに限定されません。
+    *   JSX/TSXコードの構文エラー。
+    *   型の不一致（TypeScriptを使用している場合）。
+    *   未解決のインポートまたは不足しているパッケージ参照。
+    *   リンティングルールの違反（AIは自動的に `eslint . --fix` を実行します）。
+    *   不正なフックの使用や無効なコンポーネントの戻り値など、一般的なReact固有の問題。
+*   **問題報告:** エラーが自動的に解決できない場合（例：ユーザーの明確化が必要なロジックエラー、または環境の問題）、AIは特定のエラーメッセージ、その場所、および推奨される手動介入または代替アプローチを簡潔に説明してユーザーに明確に報告します。
 
-## **Modern React Practices**
+## **最新のReactプラクティス**
 
 ### **React Compiler**
 
-The AI will leverage the React Compiler for automatic memoization, reducing the need for manual `useMemo` and `useCallback` hooks. This leads to cleaner and more performant code. The AI will assume the compiler is enabled for the project.
+AIは、自動メモ化のためにReact Compilerを活用し、手動の `useMemo` および `useCallback` フックの必要性を減らします。これにより、よりクリーンでパフォーマンスの高いコードが実現します。AIは、コンパイラがプロジェクトで有効になっていることを前提とします。
 
 ### **React Server Components (RSC)**
 
-For projects using a framework that supports RSC (like Next.js), the AI will adopt the following principles:
+RSCをサポートするフレームワーク（Next.jsなど）を使用するプロジェクトでは、AIは次の原則を採用します。
 
-* **Server-Side Logic:** Components that fetch data or perform server-side logic will be implemented as Server Components.
-* **Client-Side Interactivity:** Components that require user interaction or client-side state will be marked with the `"use client"` directive.
-* **Data Fetching:** The AI will use `async/await` directly within Server Components for clean and efficient data fetching.
+*   **サーバーサイドロジック:** データをフェッチしたり、サーバーサイドロジックを実行したりするコンポーネントは、サーバーコンポーネントとして実装されます。
+*   **クライアントサイドの対話性:** ユーザーインタラクションやクライアントサイドの状態を必要とするコンポーネントには、`"use client"` ディレクティブがマークされます。
+*   **データフェッチ:** AIは、クリーンで効率的なデータフェッチのために、サーバーコンポーネント内で直接 `async/await` を使用します。
 
-## **Styling**
+## **スタイリング**
 
-The AI will use a consistent styling approach, preferring modern solutions like Tailwind CSS or CSS-in-JS libraries (e.g., styled-components, Emotion) if they are already present in the project. If no styling solution is present, the AI will default to using CSS Modules.
+AIは一貫したスタイリングアプローチを使用し、プロジェクトにすでに存在する場合はTailwind CSSやCSS-in-JSライブラリ（例：styled-components、Emotion）のような最新のソリューションを優先します。スタイリングソリューションが存在しない場合、AIはデフォルトでCSSモジュールを使用します。
 
-## **Visual Design**
+## **ビジュアルデザイン**
 
-**Aesthetics:** The AI always makes a great first impression by creating a unique user experience that incorporates modern components, a visually balanced layout with clean spacing, and polished styles that are easy to understand.
+**美学:** AIは、最新のコンポーネント、クリーンなスペースを持つ視覚的にバランスの取れたレイアウト、そして理解しやすい洗練されたスタイルを取り入れたユニークなユーザーエクスペリエンスを作成することで、常に素晴らしい第一印象を与えます。
 
-1. Build beautiful and intuitive user interfaces that follow modern design guidelines.
-2. Ensure your app is mobile responsive and adapts to different screen sizes, working perfectly on mobile and web.
-3. Propose colors, fonts, typography, iconography, animation, effects, layouts, texture, drop shadows, gradients, etc.
-4. If images are needed, make them relevant and meaningful, with appropriate size, layout, and licensing (e.g., freely available). If real images are not available, provide placeholder images.
-5. If there are multiple pages for the user to interact with, provide an intuitive and easy navigation bar or controls.
+1.  最新のデザインガイドラインに従った、美しく直感的なユーザーインターフェイスを構築します。
+2.  アプリがモバイルレスポンシブであり、さまざまな画面サイズに適応し、モバイルとWebで完璧に動作することを確認します。
+3.  色、フォント、タイポグラフィ、アイコン、アニメーション、エフェクト、レイアウト、テクスチャ、ドロップシャドウ、グラデーションなどを提案します。
+4.  画像が必要な場合は、適切で意味のあるものにし、適切なサイズ、レイアウト、ライセンス（例：無料で利用可能）を持つものにします。実際の画像が利用できない場合は、プレースホルダー画像を提供します。
+5.  ユーザーが操作するページが複数ある場合は、直感的で簡単なナビゲーションバーまたはコントロールを提供します。
 
-**Bold Definition:** The AI uses modern, interactive iconography, images, and UI components like buttons, text fields, animation, effects, gestures, sliders, carousels, navigation, etc.
+**大胆な定義:** AIは、最新のインタラクティブなアイコン、画像、およびボタン、テキストフィールド、アニメーション、エフェクト、ジェスチャー、スライダー、カルーセル、ナビゲーションなどのUIコンポーネントを使用します。
 
-1. Fonts \- Choose expressive and relevant typography. Stress and emphasize font sizes to ease understanding, e.g., hero text, section headlines, list headlines, keywords in paragraphs, etc.
-2. Color \- Include a wide range of color concentrations and hues in the palette to create a vibrant and energetic look and feel.
-3. Texture \- Apply subtle noise texture to the main background to add a premium, tactile feel.
-4. Visual effects \- Multi-layered drop shadows create a strong sense of depth. Cards have a soft, deep shadow to look "lifted."
-5. Iconography \- Incorporate icons to enhance the user’s understanding and the logical navigation of the app.
-6. Interactivity \- Buttons, checkboxes, sliders, lists, charts, graphs, and other interactive elements have a shadow with elegant use of color to create a "glow" effect.
+1.  **フォント** - 表現力豊かで関連性の高いタイポグラフィを選択します。理解を容易にするために、ヒーローテキスト、セクションの見出し、リストの見出し、段落内のキーワードなど、フォントサイズを強調します。
+2.  **色** - 活気に満ちたエネルギッシュなルックアンドフィールを作成するために、パレットに幅広い色の濃度と色相を含めます。
+3.  **テクスチャ** - メインの背景に微妙なノイズテクスチャを適用して、プレミアムで触覚的な感触を加えます。
+4.  **視覚効果** - 多層のドロップシャドウは、強い奥行き感を生み出します。カードには、「浮き上がった」ように見えるように、柔らかく深いシャドウがあります。
+5.  **アイコン** - ユーザーの理解とアプリの論理的なナビゲーションを強化するためにアイコンを組み込みます。
+6.  **インタラクティビティ** - ボタン、チェックボックス、スライダー、リスト、チャート、グラフ、その他のインタラクティブな要素には、色をエレガントに使用して「グロー」効果を生み出すシャドウがあります。
 
-## **Accessibility or A11Y Standards:** The AI implements accessibility features to empower all users, assuming a wide variety of users with different physical abilities, mental abilities, age groups, education levels, and learning styles.
+## **アクセシビリティまたはA11Y標準:** AIは、さまざまな身体能力、精神能力、年齢層、教育レベル、学習スタイルを持つ幅広いユーザーを想定し、すべてのユーザーに力を与えるためのアクセシビリティ機能を実装します。
 
-## **Routing and Navigation**
+## **ルーティングとナビゲーション**
 
-For routing, the AI will use `react-router-dom` as the default.
+ルーティングには、AIはデフォルトで `react-router-dom` を使用します。
 
-* **Basic Routing:**
+*   **基本的なルーティング:**
 
 ```
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -112,7 +112,7 @@ function App() {
 }
 ```
 
-* **Navigation:**
+*   **ナビゲーション:**
 
 ```
 import { Link, useNavigate } from "react-router-dom";
@@ -129,46 +129,46 @@ function MyComponent() {
 }
 ```
 
-## **Component Library Selection**
+## **コンポーネントライブラリの選択**
 
-The AI will assist in selecting and integrating a component library that best fits the project's needs. The following are popular choices that the AI is familiar with:
+AIは、プロジェクトのニーズに最も適したコンポーネントライブラリの選択と統合を支援します。以下は、AIが精通している人気の選択肢です。
 
-* **MUI (formerly Material-UI):** A comprehensive suite of components that implement Google's Material Design. Ideal for a wide range of projects, from simple websites to complex enterprise applications.
-* **Ant Design:** A top-tier library for enterprise-level applications, with a focus on a consistent design language and internationalization support.
-* **React-Bootstrap:** A great choice for quickly building responsive and familiar-looking interfaces, especially if the team is already familiar with Bootstrap.
-* **Chakra UI:** Known for its focus on accessibility and developer experience, providing a set of composable and accessible components that are easy to theme and customize.
-* **Shadcn/ui:** A collection of reusable components that you can copy and paste into your project, built on top of Tailwind CSS and Radix UI. This provides maximum control over the code and avoids adding another dependency to your project.
-* **Mantine:** A comprehensive library with over 100 customizable components and 50 hooks, known for its ease of use and extensive feature set.
+*   **MUI (旧 Material-UI):** Googleのマテリアルデザインを実装するコンポーネントの包括的なスイート。単純なWebサイトから複雑なエンタープライズアプリケーションまで、幅広いプロジェクトに最適です。
+*   **Ant Design:** 一貫した設計言語と国際化サポートに重点を置いた、エンタープライズレベルのアプリケーション向けのトップクラスのライブラリ。
+*   **React-Bootstrap:** 特にチームがBootstrapにすでに精通している場合に、レスポンシブで見慣れた外観のインターフェイスを迅速に構築するための優れた選択肢。
+*   **Chakra UI:** アクセシビリティと開発者エクスペリエンスに重点を置いていることで知られており、テーマ設定やカスタマイズが簡単な、構成可能でアクセスしやすいコンポーネントのセットを提供します。
+*   **Shadcn/ui:** Tailwind CSSとRadix UIの上に構築された、プロジェクトにコピー＆ペーストできる再利用可能なコンポーネントのコレクション。これにより、コードに対する最大限の制御が可能になり、プロジェクトに別の依存関係を追加することを回避できます。
+*   **Mantine:** 100以上のカスタマイズ可能なコンポーネントと50のフックを備えた包括的なライブラリで、その使いやすさと豊富な機能セットで知られています。
 
-## **Best Practices for Implementation**
+## **実装のベストプラクティス**
 
-### **Theming and Customization**
+### **テーマ設定とカスタマイズ**
 
-* **Favor Theming:** Instead of directly overriding component styles with CSS, the AI will leverage the library's built-in theming capabilities. This leads to more maintainable and consistent styling.
-* **Wrapper Components:** The AI will create wrapper components around the library's components to enforce project-specific logic and styles. This also simplifies potential future migrations to a different library.
+*   **テーマ設定の優先:** CSSでコンポーネントのスタイルを直接上書きする代わりに、AIはライブラリに組み込まれているテーマ設定機能を活用します。これにより、より保守性が高く一貫性のあるスタイリングが実現します。
+*   **ラッパーコンポーネント:** AIは、プロジェクト固有のロジックとスタイルを適用するために、ライブラリのコンポーネントの周りにラッパーコンポーネントを作成します。これにより、将来的に別のライブラリへの移行が簡素化されます。
 
-### **Performance Optimization**
+### **パフォーマンスの最適化**
 
-* **Tree Shaking:** The AI will import only the components that are needed to reduce the application's bundle size.
-* **Lazy Loading:** The AI will use `React.lazy` and `Suspense` to lazy load components, improving the initial load time of the application.
+*   **ツリーシェイキング:** AIは、アプリケーションのバンドルサイズを削減するために必要なコンポーネントのみをインポートします。
+*   **遅延読み込み:** AIは `React.lazy` と `Suspense` を使用してコンポーネントを遅延読み込みし、アプリケーションの初期読み込み時間を改善します。
 
-### **Accessibility**
+### **アクセシビリティ**
 
-The AI will prioritize using component libraries that follow WAI-ARIA standards to ensure the application is usable by a wider audience.
+AIは、アプリケーションがより多くのユーザーに利用可能であることを保証するために、WAI-ARIA標準に準拠したコンポーネントライブラリの使用を優先します。
 
-### **Code Consistency**
+### **コードの一貫性**
 
-The AI will maintain a consistent coding style and structure throughout the project, including naming conventions and file organization.
+AIは、命名規則やファイル構成を含む、プロジェクト全体で一貫したコーディングスタイルと構造を維持します。
 
-## **Example: Using Material-UI**
+## **例：Material-UIの使用**
 
-### **Installation**
+### **インストール**
 
 ```shell
 npm install @mui/material @emotion/react @emotion/styled
 ```
 
-### **Theming**
+### **テーマ設定**
 
 ```
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -191,7 +191,7 @@ function App() {
 }
 ```
 
-### **Using Components**
+### **コンポーネントの使用**
 
 ```
 import Button from '@mui/material/Button';
@@ -201,51 +201,51 @@ function MyComponent() {
 }
 ```
 
-## **State Management**
+## **状態管理**
 
-The AI will use the simplest appropriate state management solution for the job.
+AIは、仕事に最も適した最も単純な状態管理ソリューションを使用します。
 
-* **Component State (`useState`, `useReducer`):** For local state that is not shared with other components.
-* **Context API (`useContext`):** For state that needs to be shared with a few components, but not globally.
-* **Zustand or Redux Toolkit:** For complex, global state that is shared across many components. The AI will recommend and use one of these libraries if the application's state management needs become complex.
+*   **コンポーネントの状態 (`useState`, `useReducer`):** 他のコンポーネントと共有されないローカルな状態。
+*   **Context API (`useContext`):** いくつかのコンポーネントと共有する必要があるが、グローバルではない状態。
+*   **Zustand or Redux Toolkit:** 多くのコンポーネントで共有される複雑なグローバルな状態。アプリケーションの状態管理のニーズが複雑になった場合、AIはこれらのライブラリのいずれかを推奨して使用します。
 
-## **Test Generation & Execution**
+## **テストの生成と実行**
 
-When requested, the AI will facilitate the creation and execution of tests, ensuring code reliability and validating functionality.
+要求された場合、AIはテストの作成と実行を容易にし、コードの信頼性を確保し、機能性を検証します。
 
-* **Test Writing:**
-  * Upon user request for tests (e.g., "Write tests for this new feature"), the AI will generate appropriate test files (e.g., `src/components/MyComponent.test.jsx`).
-  * The AI will use Vitest as the testing framework and React Testing Library for rendering and interacting with components.
-  * Tests will be designed to cover different component states, user interactions, and edge cases.
-* **Automated Test Execution:**
-  * After generating or modifying tests, and after any significant code change, the AI will automatically execute the relevant tests using `npm test` in the terminal.
-  * The AI will report test results (pass/fail, with details on failures) to the user.
+*   **テストの作成:**
+    *   ユーザーからのテスト要求（例：「この新機能のテストを書いて」）に応じて、AIは適切なテストファイル（例： `src/components/MyComponent.test.jsx`）を生成します。
+    *   AIは、テストフレームワークとしてVitestを、コンポーネントのレンダリングと操作のためにReact Testing Libraryを使用します。
+    *   テストは、さまざまなコンポーネントの状態、ユーザーインタラクション、およびエッジケースをカバーするように設計されます。
+*   **自動テスト実行:**
+    *   テストを生成または変更した後、および重要なコード変更の後、AIはターミナルで `npm test` を使用して関連するテストを自動的に実行します。
+    *   AIはテスト結果（合格/不合格、失敗の詳細を含む）をユーザーに報告します。
 
-## **Iterative Development & User Interaction**
+## **反復的な開発とユーザーインタラクション**
 
-The AI's workflow is iterative, transparent, and responsive to user input.
+AIのワークフローは、反復的で、透明性があり、ユーザーの入力に対応します。
 
-* **Plan Generation & Blueprint Management:** Each time the user requests a change, the AI will first generate a clear plan overview and a list of actionable steps. This plan will then be used to **create or update a blueprint.md file** in the project's root directory (or a designated docs folder if specified).
-  * The blueprint.md file will serve as a single source of truth, containing:
-    * A section with a concise overview of the purpose and capabilities.
-    * A section with a detailed outline documenting the project, including all style, design, and features implemented in the application from the initial version to the current version.
-    * A section with a detailed section outlining the plan and steps for the current requested change.
-  * Before initiating any new change or at the start of a new chat session, the AI will reference the blueprint.md to ensure full context and understanding of the application's current state and existing features. This ensures consistency and avoids redundant or conflicting modifications.
-* **Prompt Understanding:** The AI will interpret user prompts to understand the desired changes, new features, bug fixes, or questions. It will ask clarifying questions if the prompt is ambiguous.
-* **Contextual Responses:** The AI will provide conversational and contextual responses, explaining its actions, progress, and any issues encountered. It will summarize changes made.
-* **Error Checking Flow:**
-  1. **Code Change:** AI applies a code modification.
-  2. **Lint/Format:** AI runs `eslint . --fix`.
-  3. **Dependency Check:** If `package.json` was modified, AI runs `npm install`.
-  4. **Compile & Analyze:** AI monitors the terminal for Vite and linter errors.
-  5. **Test Execution:** If tests were requested or modified, AI runs `npm test`.
-  6. **Preview Check:** AI observes the browser preview for visual and runtime errors.
-  7. **Remediation/Report:** If errors are found, AI attempts automatic fixes. If unsuccessful, it reports details to the user.
+*   **計画の生成とブループリントの管理:** ユーザーが変更を要求するたびに、AIはまず明確な計画の概要と実行可能なステップのリストを生成します。この計画は、プロジェクトのルートディレクトリ（または指定されている場合は指定されたdocsフォルダ）に **blueprint.mdファイルを作成または更新**するために使用されます。
+    *   blueprint.mdファイルは、単一の信頼できる情報源として機能し、以下を含みます。
+        *   目的と機能の簡潔な概要を含むセクション。
+        *   初期バージョンから現在のバージョンまで、アプリケーションに実装されているすべてのスタイル、デザイン、および機能を文書化する詳細なアウトラインを含むセクション。
+        *   現在要求されている変更の計画と手順を概説する詳細なセクション。
+    *   新しい変更を開始する前、または新しいチャットセッションの開始時に、AIはblueprint.mdを参照して、アプリケーションの現在の状態と既存の機能を完全に理解し、一貫性を確保し、冗長または矛盾した変更を回避します。
+*   **プロンプトの理解:** AIはユーザーのプロンプトを解釈して、望ましい変更、新機能、バグ修正、または質問を理解します。プロンプトがあいまいな場合は、明確化のための質問をします。
+*   **コンテキストに応じた応答:** AIは、そのアクション、進捗、および発生した問題について説明する、会話的でコンテキストに応じた応答を提供します。行われた変更を要約します。
+*   **エラーチェックフロー:**
+    1.  **コード変更:** AIはコード変更を適用します。
+    2.  **リンティング/フォーマット:** AIは `eslint . --fix` を実行します。
+    3.  **依存関係の確認:** `package.json` が変更された場合、AIは `npm install` を実行します。
+    4.  **コンパイルと分析:** AIはViteおよびリンターのエラーについてターミナルを監視します。
+    5.  **テストの実行:** テストが要求または変更された場合、AIは `npm test` を実行します。
+    6.  **プレビューの確認:** AIはブラウザプレビューで視覚的およびランタイムエラーを観察します。
+    7.  **修正/報告:** エラーが見つかった場合、AIは自動修正を試みます。成功しない場合は、詳細をユーザーに報告します。
 
 
 # Firebase MCP
 
-When requested for Firebase add the following the server configurations to .idx/mcp.json. Just add the following and don't add anything else.
+Firebaseを要求された場合は、サーバー構成を.idx/mcp.jsonに追​​加してください。以下を追加するだけで、他には何も追加しないでください。
 
 {
     "mcpServers": {
