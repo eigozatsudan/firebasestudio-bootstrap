@@ -1,8 +1,6 @@
 services:
   frontend:
     build: ./frontend
-    tty: true
-    stdinOpen: true
     volumes:
       - ./frontend:/app
     ports:
@@ -10,8 +8,6 @@ services:
 
   backend:
     build: ./backend
-    tty: true
-    stdinOpen: true
     volumes:
       - ./backend:/app
     ports:
@@ -21,7 +17,12 @@ services:
     image: postgres:16
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # データの永続化
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
+
+volumes:
+  postgres_data:
