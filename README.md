@@ -1,7 +1,11 @@
-
 # React + FastAPI on Docker
 
-このプロジェクトは、フロントエンドにReact、バックエンドにFastAPIを使用したWebアプリケーションを、Docker Composeを使ってコンテナ環境で実行するためのサンプルです。
+このプロジェクトは、フロントエンドに **React**、バックエンドに **FastAPI** を使用したWebアプリケーションを、Docker Composeを使ってコンテナ環境で実行するためのサンプルテンプレートです。
+
+## 🌟 Firebase Studio とは
+
+**Firebase Studio** は、Googleが提供する次世代のクラウド開発環境です。ブラウザだけで、ローカル開発環境と遜色ないフルスタックの開発・テスト・プレビューが可能になります。
+本リポジトリは、この Firebase Studio 上で Docker 構成を即座に立ち上げられるよう最適化されています。
 
 ## 🚀 1分で開始：Firebase Studio へのインポート
 
@@ -16,7 +20,7 @@ https://github.com/eigozatsudan/firebasestudio-bootstrap
 
 
 3. **初回のみ：依存関係のインストール**
-インポート完了後、Studio内のターミナルで以下のコマンドを実行します：
+インポート完了後、Studio内のターミナル（画面下部）で以下のコマンドを実行します：
 ```bash
 docker compose run --rm frontend npm install
 
@@ -30,7 +34,7 @@ docker compose run --rm frontend npm install
 
 ## 🛠️ ローカル環境でのセットアップ
 
-開発環境をローカルに構築する場合は、以下の手順に従ってください。
+開発環境をローカル（PC）に構築する場合は、以下の手順に従ってください。
 
 ### 前提条件
 
@@ -78,10 +82,29 @@ Firebase Studio 上でコンテナを制御する際は、**「Web」タブ**に
 
 ```
 .
-├── .nix            # Firebase Studio 環境設定
+├── .nix            # Firebase Studio 環境設定 (Nix shells)
 ├── backend         # バックエンド (FastAPI)
 ├── compose.yml     # Docker Compose 設定
 ├── frontend        # フロントエンド (React)
 └── nginx.conf      # Nginx 設定
 
 ```
+
+---
+
+## ❓ FAQ
+
+**Q: なぜ Nginx が必要なのですか？**
+A: Nginx はリバースプロキシとして動作します。パス（例: `/api/*` はバックエンドへ、それ以外はフロントエンドへ）に応じて適切なコンテナへリクエストを振り分ける役割を担っています。
+
+**Q: CORS（Cross-Origin Resource Sharing）への対応はどうなっていますか？**
+A: 本構成では **Nginx がすべてのリクエストを集約し、同一ドメイン・同一ポートとして各コンテナへ振り分ける**ため、ブラウザから見れば「同じ場所」への通信となります。そのため、複雑な CORS 設定を意識することなく開発が可能です。
+
+**Q: なぜ Firebase Studio で "Hard restart" が必要なのですか？**
+A: Firebase Studio の環境で Docker Compose の設定変更を確実に反映させ、プレビューURLとコンテナを正しく同期させるために必要です。
+
+**Q: フロントエンドにライブラリを追加した場合は？**
+A: `frontend/package.json` を更新後、ターミナルで `docker compose run --rm frontend npm install` を実行し、再度 "Hard restart" を行ってください。
+
+**Q: バックエンドのコードを変更しても反映されません。**
+A: FastAPI はホットリロード設定（`--reload`）で起動していますが、依存関係（`requirements.txt`）などを変更した場合は、`docker compose up --build` を実行してイメージを再構築する必要があります。
