@@ -1,3 +1,4 @@
+
 # React + FastAPI on Docker
 
 このプロジェクトは、フロントエンドにReact、バックエンドにFastAPIを使用したWebアプリケーションを、Docker Composeを使ってコンテナ環境で実行するためのサンプルです。
@@ -10,6 +11,7 @@
 2. **Repository URL** に以下を貼り付けて **Import** をクリック：
 ```text
 https://github.com/eigozatsudan/firebasestudio-bootstrap
+
 ```
 
 
@@ -17,6 +19,7 @@ https://github.com/eigozatsudan/firebasestudio-bootstrap
 インポート完了後、Studio内のターミナルで以下のコマンドを実行します：
 ```bash
 docker compose run --rm frontend npm install
+
 ```
 
 
@@ -75,6 +78,7 @@ Firebase Studio 上でコンテナを制御する際は、**「Web」タブ**に
 
 ```
 .
+├── .nix            # Firebase Studio 環境設定
 ├── backend         # バックエンド (FastAPI)
 ├── compose.yml     # Docker Compose 設定
 ├── frontend        # フロントエンド (React)
