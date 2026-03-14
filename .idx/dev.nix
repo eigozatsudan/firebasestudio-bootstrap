@@ -8,10 +8,6 @@
     pkgs.nodejs_20
   ];
   services = {
-    postgres = {
-      enable = true;
-      package = pkgs.postgresql_16;
-    };
     docker = {
       enable = true;
     };

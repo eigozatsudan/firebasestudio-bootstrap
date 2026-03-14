@@ -1,13 +1,27 @@
 services:
   frontend:
     build: ./frontend
+    tty: true
+    stdinOpen: true
     volumes:
       - ./frontend:/app
     ports:
       - "${PORT:-5173}:5173"
+
   backend:
     build: ./backend
+    tty: true
+    stdinOpen: true
     volumes:
       - ./backend:/app
     ports:
       - "8000:8000"
+      
+  db:
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
