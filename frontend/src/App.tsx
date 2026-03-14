@@ -15,9 +15,8 @@ function App() {
     const fetchData = async () => {
       try {
         const response = await fetch("/api/hello");
-        const text = await response.text();
-        console.log(text);
-        setValue(text);
+        const text = await response.json();
+        setValue(text.Hello);
       } catch (error) {
         console.error(error);
       }
