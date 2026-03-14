@@ -10,11 +10,18 @@
 2. **Repository URL** に以下を貼り付けて **Import** をクリック：
 ```text
 https://github.com/eigozatsudan/firebasestudio-bootstrap
-
 ```
 
 
-3. インポート完了後、画面上部の **「Web」タブ** 内にある **"Hard restart"** ボタンをクリックして起動します。
+3. **初回のみ：依存関係のインストール**
+インポート完了後、Studio内のターミナルで以下のコマンドを実行します：
+```bash
+docker compose run --rm frontend npm install
+```
+
+
+4. **起動**
+画面上部の **「Web」タブ** 内にある **"Hard restart"** ボタンをクリックして起動します。
 
 ---
 
@@ -50,7 +57,7 @@ docker compose up --build -d
 
 Firebase Studio 上でコンテナを制御する際は、**「Web」タブ**にある操作パネルを使用します。
 
-* **初回起動:** Firebase Studio 画面上部の **「Web」タブ** を選択し、その中にある **"Hard restart"** ボタンをクリックしてください。
+* **初回起動:** 上記の `npm install` 完了後、画面上部の **「Web」タブ** を選択し、その中にある **"Hard restart"** ボタンをクリックしてください。
 * **コンテナの再起動:**
 1. Studio内のターミナルで `docker compose down` を実行。
 2. **「Web」タブ** の **"Hard restart"** ボタンを再度クリックします。
