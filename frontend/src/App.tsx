@@ -1,10 +1,30 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [value, setValue] = useState("")
+  const hasFetched = useRef(false);
+
+  useEffect(() => {
+    if (hasFetched.current) return;
+    hasFetched.current = true;
+  
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/hello");
+        const text = await response.text();
+        console.log(text);
+        setValue(text);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -21,6 +41,9 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
+        <p>
+          {value}
+        </p>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
