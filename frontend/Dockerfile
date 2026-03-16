@@ -1,9 +1,9 @@
 # 軽量なAlpineイメージでベースサイズを削減
 FROM node:24-alpine
 
-# 非rootユーザーで実行（セキュリティ）
-RUN addgroup --system --gid 1000 app && \
-    adduser --system --uid 1000 --ingroup app --no-create-home app
+# 非rootユーザーで実行（セキュリティ。GID/UIDはベースイメージで1000が使われているため別番号を使用）
+RUN addgroup --system --gid 1001 app && \
+    adduser --system --uid 1001 --ingroup app --no-create-home app
 
 WORKDIR /app
 
