@@ -1,10 +1,6 @@
 # 軽量なAlpineイメージでベースサイズを削減
 FROM node:24-alpine
 
-# 非rootユーザーで実行（セキュリティ。GID/UIDはベースイメージで1000が使われているため別番号を使用）
-RUN addgroup --system --gid 1001 app && \
-    adduser --system --uid 1001 --ingroup app --no-create-home app
-
 WORKDIR /app
 
 # 依存関係を先にコピーしてレイヤーキャッシュを活用
@@ -12,10 +8,9 @@ COPY package.json package-lock.json* ./
 RUN npm ci
 
 # アプリケーションコードをコピー
-COPY --chown=app:app . .
+COPY . .
 
-USER app
-
+# compose の volume (./frontend:/app) 利用時に npm install が書けるよう root で実行
 EXPOSE 5173
 
 # ヘルスチェック（オーケストレーター用）
