@@ -15,23 +15,21 @@
 
 1. **[Firebase Studio Import](https://studio.firebase.google.com/import) を開く**
 2. **Repository URL** に以下を貼り付けて **Import** をクリック：
-```text
-https://github.com/eigozatsudan/firebasestudio-bootstrap
-
-```
+   ```text
+   https://github.com/eigozatsudan/firebasestudio-bootstrap
+   ```
 
 
 3. **初回のみ：依存関係のインストールとビルド**
 インポート完了後、Studio内のターミナル（画面下部）で以下のコマンドを順番に実行します。
 これにより、Webプレビュー起動時のフリーズやエラーを回避できます。
-```bash
-# 1. フロントエンドの依存関係をインストール
-docker compose run --rm frontend npm install
+   ```bash
+   # 1. フロントエンドの依存関係をインストール
+   docker compose run --rm frontend npm install
 
-# 2. 事前にビルドを完了させ、一旦停止する
-docker compose up --build -d && docker compose down
-
-```
+   # 2. 事前にビルドを完了させ、一旦停止する
+   docker compose up --build -d && docker compose down
+   ```
 
 
 4. **起動確認**
@@ -50,18 +48,20 @@ PCローカルに構築する場合は、以下の手順に従ってください
 ### 手順
 
 1. **リポジトリをクローン**
+   ```bash
+   git clone https://github.com/eigozatsudan/firebasestudio-bootstrap
+   cd firebasestudio-bootstrap
+   ```
 2. **フロントエンドの依存関係をインストール**
-```bash
-docker compose run --rm frontend npm install
-
-```
+   ```bash
+   docker compose run --rm frontend npm install
+   ```
 
 
 3. **コンテナをビルドして起動**
-```bash
-docker compose up --build -d
-
-```
+   ```bash
+   docker compose up --build -d
+   ```
 
 
 
@@ -73,8 +73,8 @@ Firebase Studio 上でコンテナを制御する際は、**「Web」タブ**に
 
 * **初回起動:** 上記のターミナル操作（`npm install` および `up --build && down`）が完了した後、画面上部の **「Web」タブ** を選択し、その中にある **"Hard restart"** ボタンをクリックしてください。
 * **コンテナの再起動:**
-1. Studio内のターミナルで `docker compose down` を実行。
-2. **「Web」タブ** の **"Hard restart"** ボタンを再度クリックします。
+  1. Studio内のターミナルで `docker compose down` を実行する。
+  2. **「Web」タブ** の **"Hard restart"** ボタンを再度クリックする。
 
 
 
@@ -91,11 +91,12 @@ Firebase Studio 上でコンテナを制御する際は、**「Web」タブ**に
 .
 ├── .idx            # Firebase Studio 環境設定 (Nix shells)
 ├── backend         # バックエンド (FastAPI)
-├── compose.yml     # Docker Compose 設定
+├── compose.yml     # Docker Compose 設定 (frontend / backend / nginx / db)
 ├── frontend        # フロントエンド (React)
 └── nginx.conf      # Nginx 設定
-
 ```
+
+`compose.yml` では、上記のほか **PostgreSQL (db)** サービスも定義されています。必要に応じてバックエンドから利用できます。
 
 ---
 
