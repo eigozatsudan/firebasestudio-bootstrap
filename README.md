@@ -89,7 +89,7 @@ Firebase Studio 上でコンテナを制御する際は、**「Web」タブ**に
 
 ```
 .
-├── .nix            # Firebase Studio 環境設定 (Nix shells)
+├── .idx            # Firebase Studio 環境設定 (Nix shells)
 ├── backend         # バックエンド (FastAPI)
 ├── compose.yml     # Docker Compose 設定
 ├── frontend        # フロントエンド (React)
